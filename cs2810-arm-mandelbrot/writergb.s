@@ -9,8 +9,8 @@ writeRGB:
 		@r6: red
 		@r7: green
 		@r8: blue
-		mov	r4, r1
-		mov	r5, r2
+		mov	r4, r0
+		mov	r5, r1
 		mov	r6, #0xff
 		and	r6, r6, r5, lsr#16
 		mov	r7, #0xff
