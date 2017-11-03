@@ -15,7 +15,7 @@ writeHeader:
 		mov	r6, #0
 		strb	r0, [r4, r6]
 		add	r6, r6, #1
-		mov	r0, #3
+		mov	r0, #'3'
 		strb	r0, [r4, r6]
 		add	r6, r6, #1
 		mov	r0, #'\n'
