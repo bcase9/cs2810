@@ -108,16 +108,17 @@ Your code should implement this pseudo-code in `run.s`:
 
 ```
 fd = open(filename, flags, mode)
-if fd < 0: return 1 (use the constant fail_open)
+if fd < 0: return fail_open
 
-bufsize = writeHeader(buffer, xsize, ysize)
-status = write(fd, buffer, bufsize)
+# write the header
+length = writeHeader(buffer, xsize, ysize)
+status = write(fd, buffer, length)
 if status < 0: return fail_writeheader
 
+# close the file
 status = close(fd)
 if status < 0: return fail_close
-
-return 0 (success)
+return 0
 ```
 
 The starter code include constant definitions for flags and mode as
