@@ -46,44 +46,54 @@ run:
 	add	r8, r8, r0
 	mov	r2, r0
 	mov	r6, #0 @column
-	ldr	r5, =buffer
+	mov	r5, #0 @row
+	ldr	r10, =ysize
+	ldr	r10, [r10]
 	ldr	r9, =xsize
 	ldr	r9, [r9]
 	mov	r0, r4
-	b	4f
-3:		@loop
-	add	r0, r5, r8
+	b	6f
+3:		@row loop		
+4:		@col loop
+	ldr	r0, =buffer
+	add	r0, r0, r8
 	mov	r1, r6, lsl #8
 	bl	writeRGB
 	add	r8, r8, r0
 	mov	r3, #' '
-	strb	r3, [r5,r8]
+	ldr	r0, =buffer
+	strb	r3, [r0,r8]
 	add	r6, r6, #1
 	add	r8, r8, #1
-4:		@test
+5:		@col test
 	cmp	r6, r9
-	blt 	3b
+	blt 	4b
 	mov	r3, #'\n'
 	sub	r2, r8, #1
-	strb	r3, [r5,r2]
+	ldr	r0, =buffer
+	strb	r3, [r0,r2]
+	add	r5, r5, #1
+6:		@row test
+	cmp	r5, r10
+	blt	3b
 	mov	r0, r4
 	ldr	r1, =buffer
 	mov	r2, r8
 	mov	r7, #sys_write
 	svc	#0
 	cmp	r0, #0
-	bge	5f	
+	bge	7f	
 	mov	r0, #fail_writerow
 	pop	{r4,r5,r6,r7,r8,r9,r10,pc}
-5:		@if write works
+7:		@if write works
 	mov	r0,r4
 	mov	r7, #sys_close
 	svc	#0
 	cmp	r0, #0
-	bge	6f
+	bge	8f
 	mov	r0, #fail_close
 	pop	{r4,r5,r6,r7,r8,r9,r10,pc}
-6:		@if close works
+8:		@if close works
 	mov	r0, #0
 	pop	{r4,r5,r6,r7,r8,r9,r10,pc}
                 .bss
