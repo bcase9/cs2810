@@ -26,7 +26,7 @@ if status < 0: return fail_writeheader
 
 # write a single row of pixels
 length = 0
-for column in range(256):
+for column in range(xsize):
     color = column << 8
     length += writeRGB(buffer+length, color)
     buffer[length] = ' '
