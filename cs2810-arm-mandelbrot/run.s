@@ -73,20 +73,21 @@ run:
 	sub	r2, r8, #1
 	ldr	r0, =buffer
 	strb	r3, [r0,r2]
+        mov     r0, r4  
+        ldr     r1, =buffer
+        mov     r2, r8
+        mov     r7, #sys_write
+        svc     #0
+        cmp     r0, #0
+        bge     7f     
+        mov     r0, #fail_writerow
+        pop     {r4,r5,r6,r7,r8,r9,r10,pc}
+7:              @if write works
+	mov	r8, #0
 	add	r5, r5, #1
 6:		@row test
 	cmp	r5, r10
 	blt	3b
-	mov	r0, r4
-	ldr	r1, =buffer
-	mov	r2, r8
-	mov	r7, #sys_write
-	svc	#0
-	cmp	r0, #0
-	bge	7f	
-	mov	r0, #fail_writerow
-	pop	{r4,r5,r6,r7,r8,r9,r10,pc}
-7:		@if write works
 	mov	r0,r4
 	mov	r7, #sys_close
 	svc	#0
