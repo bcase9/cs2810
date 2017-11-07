@@ -45,7 +45,6 @@ run:
 2:		@if write header works
 	add	r8, r8, r0
 	mov	r2, r0
-	mov	r6, #0 @column
 	mov	r5, #0 @row
 	ldr	r10, =ysize
 	ldr	r10, [r10]
@@ -54,10 +53,12 @@ run:
 	mov	r0, r4
 	b	6f
 3:		@row loop		
+	mov	r6, #0 @column
 4:		@col loop
 	ldr	r0, =buffer
 	add	r0, r0, r8
 	mov	r1, r6, lsl #8
+	add	r1, r1, r5, lsl #16
 	bl	writeRGB
 	add	r8, r8, r0
 	mov	r3, #' '
