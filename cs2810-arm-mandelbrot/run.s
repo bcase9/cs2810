@@ -55,10 +55,14 @@ run:
 3:		@row loop		
 	mov	r6, #0 @column
 4:		@col loop
+	ldr	r0, =iters
+	ldr	r0, [r0]
+	mov	r1,r6
+	mov	r2,r5
+	bl	calcPixel
+	mov	r1,r0
 	ldr	r0, =buffer
 	add	r0, r0, r8
-	mov	r1, r6, lsl #8
-	add	r1, r1, r5, lsl #16
 	bl	writeRGB
 	add	r8, r8, r0
 	mov	r3, #' '
