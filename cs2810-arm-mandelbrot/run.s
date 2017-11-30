@@ -59,7 +59,16 @@ run:
 	ldr	r0, [r0]
 	mov	r1,r6
 	mov	r2,r5
+	push	{r3,r4}
+	ldr	r3,=xsize
+	ldr	r4,=ysize
+	ldr	r3,[r3]
+	ldr	r4,[r4]
+	sub	sp,sp,#8
+	str	r4,[sp]	
 	bl	calcPixel
+	add	sp,sp,#8
+	pop	{r3,r4}
 	mov	r1,r0
 	ldr	r0, =buffer
 	add	r0, r0, r8
